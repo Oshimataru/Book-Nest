@@ -1,0 +1,263 @@
+.clubdetail-container {
+    min-height: 100vh;
+    background-color: #0d1117;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.clubdetail-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.club-title h2 {
+    color: #c9d1d9;
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.club-title p {
+    color: #8b949e;
+    font-size: 14px;
+}
+
+.reading-now {
+    color: #58a6ff !important;
+    margin-top: 8px !important;
+}
+
+.club-meta {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.club-meta span {
+    color: #8b949e;
+    font-size: 14px;
+}
+
+.leave-btn {
+    padding: 8px 16px;
+    background: transparent;
+    color: #f85149;
+    border: 1px solid #f85149;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.leave-btn:hover {
+    background: #f85149;
+    color: white;
+}
+
+.clubdetail-body {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 24px;
+}
+
+.members-panel {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 20px;
+    height: fit-content;
+}
+
+.members-panel h3 {
+    color: #c9d1d9;
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+
+.members-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.member-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.member-avatar {
+    width: 32px;
+    height: 32px;
+    background: #1c3a5e;
+    color: #58a6ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.member-name {
+    color: #c9d1d9;
+    font-size: 14px;
+}
+
+.creator-badge {
+    margin-left: auto;
+    padding: 2px 8px;
+    background: #3d2b00;
+    color: #e3b341;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.discussions-panel {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.discussions-panel h3 {
+    color: #c9d1d9;
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+
+.discussions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 500px;
+    overflow-y: auto;
+    margin-bottom: 16px;
+    padding-right: 8px;
+}
+
+.discussion-item {
+    display: flex;
+    gap: 12px;
+}
+
+.disc-avatar {
+    width: 36px;
+    height: 36px;
+    background: #1c3a5e;
+    color: #58a6ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.disc-content {
+    flex: 1;
+    background: #0d1117;
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #30363d;
+}
+
+.disc-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.disc-name {
+    color: #58a6ff;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.disc-time {
+    color: #8b949e;
+    font-size: 12px;
+}
+
+.disc-message {
+    color: #c9d1d9;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.post-discussion {
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid #30363d;
+    padding-top: 16px;
+}
+
+.post-discussion input {
+    flex: 1;
+    padding: 10px 14px;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    color: #c9d1d9;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.3s;
+}
+
+.post-discussion input:focus {
+    border-color: #58a6ff;
+}
+
+.post-discussion button {
+    padding: 10px 20px;
+    background: #238636;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.post-discussion button:hover {
+    background: #2ea043;
+}
+
+.no-discussions {
+    text-align: center;
+    color: #8b949e;
+    font-size: 14px;
+    padding: 20px;
+}
+
+.back-btn {
+    padding: 10px 16px;
+    background: transparent;
+    color: #8b949e;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.back-btn:hover {
+    background: #21262d;
+    color: #c9d1d9;
+}
+
+@media (max-width: 768px) {
+    .clubdetail-body {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,207 @@
+.orders-container {
+    min-height: 100vh;
+    background-color: #0d1117;
+    padding: 40px 20px;
+}
+
+.orders-header {
+    max-width: 800px;
+    margin: 0 auto 24px auto;
+}
+
+.orders-header h2 {
+    font-size: 28px;
+    color: #c9d1d9;
+}
+
+.orders-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.order-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 24px;
+    transition: border-color 0.2s;
+}
+
+.order-card:hover {
+    border-color: #58a6ff;
+}
+
+.order-book {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.order-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #0d1117;
+    flex-shrink: 0;
+}
+
+.order-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.no-image-small {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+
+.order-info h3 {
+    color: #c9d1d9;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.order-info p {
+    color: #8b949e;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.order-type {
+    display: inline-block;
+    padding: 2px 8px;
+    background: #1c3a5e;
+    color: #58a6ff;
+    border-radius: 20px;
+    font-size: 11px !important;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.order-amount {
+    color: #58a6ff !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+}
+
+.order-details {
+    border-top: 1px solid #30363d;
+    padding-top: 16px;
+    margin-bottom: 16px;
+}
+
+.order-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+    color: #8b949e;
+    border-bottom: 1px solid #21262d;
+}
+
+.order-status {
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.status-pending {
+    background: #3d2b00;
+    color: #e3b341;
+}
+
+.status-confirmed {
+    background: #1c3a5e;
+    color: #58a6ff;
+}
+
+.status-shipped {
+    background: #2d1f69;
+    color: #d2a8ff;
+}
+
+.status-delivered {
+    background: #1a4731;
+    color: #3fb950;
+}
+
+.status-cancelled {
+    background: #2d1515;
+    color: #f85149;
+}
+
+.cancel-btn {
+    padding: 10px 20px;
+    background: transparent;
+    color: #f85149;
+    border: 1px solid #f85149;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.cancel-btn:hover {
+    background: #f85149;
+    color: white;
+}
+
+.no-orders {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.no-orders p {
+    color: #8b949e;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.browse-btn {
+    padding: 12px 24px;
+    background: #238636;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.browse-btn:hover {
+    background: #2ea043;
+}
+.order-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.track-btn {
+    padding: 10px 20px;
+    background: transparent;
+    color: #58a6ff;
+    border: 1px solid #58a6ff;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.track-btn:hover {
+    background: #58a6ff;
+    color: #0d1117;
+}

@@ -1,0 +1,201 @@
+.clubs-container {
+    min-height: 100vh;
+    background-color: #0d1117;
+    padding: 40px 20px;
+}
+
+.clubs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 24px auto;
+}
+
+.clubs-header h2 {
+    color: #c9d1d9;
+    font-size: 28px;
+}
+
+.create-club-btn {
+    padding: 10px 20px;
+    background: #238636;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.create-club-btn:hover {
+    background: #2ea043;
+}
+
+.create-club-form {
+    max-width: 1200px;
+    margin: 0 auto 24px auto;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.create-club-form h3 {
+    color: #c9d1d9;
+    margin-bottom: 16px;
+}
+
+.create-club-form input,
+.create-club-form textarea {
+    width: 100%;
+    padding: 10px 14px;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    color: #c9d1d9;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+
+.create-club-form input:focus,
+.create-club-form textarea:focus {
+    border-color: #58a6ff;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.cancel-btn {
+    padding: 10px 20px;
+    background: transparent;
+    color: #8b949e;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.submit-btn {
+    padding: 10px 20px;
+    background: #238636;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.clubs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.club-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 24px;
+    transition: border-color 0.2s;
+}
+
+.club-card:hover {
+    border-color: #58a6ff;
+}
+
+.club-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.club-card h3 {
+    color: #c9d1d9;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.club-desc {
+    color: #8b949e;
+    font-size: 14px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.club-book {
+    color: #58a6ff;
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.club-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    border-top: 1px solid #30363d;
+    padding-top: 16px;
+}
+
+.club-members {
+    color: #8b949e;
+    font-size: 13px;
+}
+
+.club-btns {
+    display: flex;
+    gap: 8px;
+}
+
+.view-btn {
+    padding: 6px 14px;
+    background: transparent;
+    color: #58a6ff;
+    border: 1px solid #58a6ff;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.view-btn:hover {
+    background: #58a6ff;
+    color: #0d1117;
+}
+
+.join-btn {
+    padding: 6px 14px;
+    background: #238636;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.join-btn:hover {
+    background: #2ea043;
+}
+
+.no-clubs {
+    text-align: center;
+    color: #8b949e;
+    font-size: 18px;
+    margin-top: 60px;
+}
+.joined-badge {
+    padding: 6px 14px;
+    background: #1a4731;
+    color: #3fb950;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+}
