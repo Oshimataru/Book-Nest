@@ -3,11 +3,6 @@ import axios from 'axios';
 const API = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL + '/api'
 });
-```
-
-Then make sure your Vercel project has the environment variable set. Go to Vercel → **Settings → Environment Variables** and confirm:
-```
-VITE_API_BASE_URL = https://booknest-backend-production-a8ed.up.railway.app
 
 // Automatically attach token to every request
 API.interceptors.request.use((config) => {
@@ -32,7 +27,6 @@ export const getMyBooks = () => API.get('/books/my-books');
 export const searchBooks = (keyword) => API.get(`/books/search?keyword=${keyword}`);
 export const deleteBook = (id) => API.delete(`/books/${id}`);
 export const updateBook = (id, formData) => API.put(`/books/${id}`, formData);
-
 
 // Order APIs
 export const placeOrder = (bookId, type, address) =>
