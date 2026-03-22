@@ -1,8 +1,13 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: 'http://localhost:8080/api'
+    baseURL: import.meta.env.VITE_API_BASE_URL + '/api'
 });
+```
+
+Then make sure your Vercel project has the environment variable set. Go to Vercel → **Settings → Environment Variables** and confirm:
+```
+VITE_API_BASE_URL = https://booknest-backend-production-a8ed.up.railway.app
 
 // Automatically attach token to every request
 API.interceptors.request.use((config) => {
