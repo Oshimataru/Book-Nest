@@ -46,7 +46,7 @@ body {
 
 .hero-btn-primary {
     padding: 14px 32px;
-    background: #238636;
+    background:rgb(5, 124, 133);
     color: white;
     border: none;
     border-radius: 8px;
@@ -57,7 +57,7 @@ body {
 }
 
 .hero-btn-primary:hover {
-    background: #2ea043;
+    background:rgb(15, 7, 131);
 }
 
 .hero-btn-secondary {

@@ -152,7 +152,7 @@
 .you-badge {
     padding: 2px 8px;
     background: #1a4731;
-    color: #3fb950;
+    color:rgb(5, 124, 133);
     border-radius: 20px;
     font-size: 11px;
     font-weight: 600;
@@ -270,7 +270,7 @@
 }
 
 .history-points {
-    color: #3fb950;
+    background: rgb(5, 124, 133);
     font-weight: 600;
     font-size: 14px;
 }
@@ -313,7 +313,7 @@
 }
 
 .earn-item strong {
-    color: #3fb950;
+    background: rgb(5, 124, 133);
     font-size: 14px;
 }
 

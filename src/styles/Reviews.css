@@ -81,8 +81,8 @@
 
 .add-review button {
     padding: 10px 24px;
-    background: #238636;
-    color: white;
+    background: rgb(5, 124, 133);
+    color: white; 
     border: none;
     border-radius: 8px;
     font-size: 14px;
@@ -92,7 +92,7 @@
 }
 
 .add-review button:hover {
-    background: #2ea043;
+    background: #362ea0;
 }
 
 .add-review button:disabled {

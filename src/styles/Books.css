@@ -42,7 +42,7 @@
 
 .search-form button {
     padding: 10px 20px;
-    background-color: #238636;
+    background:rgb(5, 124, 133);
     color: white;
     border: none;
     border-radius: 8px;
@@ -53,7 +53,7 @@
 }
 
 .search-form button:hover {
-    background-color: #2ea043;
+    background-color: #302ea0;
 }
 
 .filters-bar {

@@ -142,8 +142,9 @@
 .accept-btn {
     padding: 8px 16px;
     background: #1a4731;
-    color: #3fb950;
-    border: 1px solid #3fb950;
+    background: rgb(5, 124, 133);
+    color: #b8bbb9;
+    border: 1px solid #b4b6b4;
     border-radius: 8px;
     font-size: 13px;
     font-weight: 600;
