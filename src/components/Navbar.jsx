@@ -392,7 +392,7 @@ const Navbar = () => {
 
 /* BUTTONS */
 .nv-btn-login {
-  color: #a07828 !important;
+  color:#0ea1ce  !important;
   border: 1px solid rgba(160,120,40,0.4) !important;
 }
 
