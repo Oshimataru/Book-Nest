@@ -32,28 +32,29 @@ const Home = () => {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Fraunces:ital,wght@0,600;1,400&display=swap');
-        .hm{min-height:calc(100vh - 61px);background:#0d1117;font-family:'Inter',sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:72px 24px 80px;text-align:center;}
-        .hm-tag{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border:1px solid rgba(201,168,76,0.2);border-radius:100px;font-size:11px;font-weight:400;letter-spacing:1.2px;text-transform:uppercase;color:rgba(201,168,76,0.6);margin-bottom:36px;animation:hmUp 0.7s ease both;}
-        .hm-dot{width:5px;height:5px;border-radius:50%;background:#c9a84c;opacity:0.7;}
-        .hm-h1{font-family:'Fraunces',serif;font-size:clamp(42px,7vw,82px);font-weight:600;line-height:1.05;color:#f0e6cc;letter-spacing:-1px;margin-bottom:20px;animation:hmUp 0.7s 0.08s ease both;}
-        .hm-h1 em{font-style:italic;font-weight:400;color:#c9a84c;}
-        .hm-sub{font-size:15px;font-weight:300;color:rgba(232,220,200,0.4);max-width:360px;line-height:1.7;margin-bottom:44px;animation:hmUp 0.7s 0.16s ease both;}
+        .hm*{box-sizing:border-box;margin:0;padding:0;}
+        .hm{min-height:calc(100vh - 61px);background:#f7f3ee;font-family:'Inter',sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:72px 24px 80px;text-align:center;}
+        .hm-tag{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border:1px solid rgba(160,120,40,0.22);border-radius:100px;font-size:11px;font-weight:400;letter-spacing:1.2px;text-transform:uppercase;color:rgba(160,120,40,0.7);margin-bottom:36px;animation:hmUp 0.7s ease both;}
+        .hm-dot{width:5px;height:5px;border-radius:50%;background:#a07828;opacity:0.7;}
+        .hm-h1{font-family:'Fraunces',serif;font-size:clamp(42px,7vw,80px);font-weight:600;line-height:1.05;color:#1a1610;letter-spacing:-1px;margin-bottom:20px;animation:hmUp 0.7s 0.08s ease both;}
+        .hm-h1 em{font-style:italic;font-weight:400;color:#a07828;}
+        .hm-sub{font-size:15px;font-weight:300;color:rgba(26,22,16,0.45);max-width:360px;line-height:1.7;margin-bottom:44px;animation:hmUp 0.7s 0.16s ease both;}
         .hm-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:72px;animation:hmUp 0.7s 0.24s ease both;}
-        .hm-bp{padding:12px 28px;background:#c9a84c;color:#0d1117;border:none;border-radius:4px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:background 0.15s,transform 0.15s;}
-        .hm-bp:hover{background:#d4b55a;transform:translateY(-1px);}
-        .hm-bg{padding:12px 28px;background:transparent;border:1px solid rgba(201,168,76,0.25);border-radius:4px;color:rgba(201,168,76,0.7);font-family:'Inter',sans-serif;font-size:13px;font-weight:400;cursor:pointer;transition:border-color 0.15s,color 0.15s,transform 0.15s;}
-        .hm-bg:hover{border-color:rgba(201,168,76,0.5);color:#c9a84c;transform:translateY(-1px);}
-        .hm-stats{display:flex;border-top:1px solid rgba(201,168,76,0.1);border-bottom:1px solid rgba(201,168,76,0.1);width:100%;max-width:540px;animation:hmUp 0.7s 0.32s ease both;}
-        .hm-stat{flex:1;padding:20px 0;text-align:center;border-right:1px solid rgba(201,168,76,0.1);}
+        .hm-bp{padding:12px 28px;background:#a07828;color:#fff;border:none;border-radius:4px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:background 0.15s,transform 0.15s;}
+        .hm-bp:hover{background:#b5892e;transform:translateY(-1px);}
+        .hm-bg{padding:12px 28px;background:transparent;border:1px solid rgba(160,120,40,0.28);border-radius:4px;color:rgba(160,120,40,0.8);font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;transition:border-color 0.15s,color 0.15s,transform 0.15s;}
+        .hm-bg:hover{border-color:rgba(160,120,40,0.55);color:#a07828;transform:translateY(-1px);}
+        .hm-stats{display:flex;border-top:1px solid rgba(160,120,40,0.12);border-bottom:1px solid rgba(160,120,40,0.12);width:100%;max-width:540px;animation:hmUp 0.7s 0.32s ease both;}
+        .hm-stat{flex:1;padding:20px 0;text-align:center;border-right:1px solid rgba(160,120,40,0.12);}
         .hm-stat:last-child{border-right:none;}
-        .hm-sn{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:#c9a84c;line-height:1;margin-bottom:4px;}
-        .hm-sl{font-size:11px;font-weight:300;color:rgba(232,220,200,0.3);letter-spacing:0.5px;}
-        .hm-feats{display:grid;grid-template-columns:repeat(4,1fr);width:100%;max-width:540px;border-top:1px solid rgba(201,168,76,0.08);animation:hmUp 0.7s 0.4s ease both;}
-        .hm-feat{padding:26px 16px;text-align:center;border-right:1px solid rgba(201,168,76,0.08);transition:background 0.2s;}
+        .hm-sn{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:#a07828;line-height:1;margin-bottom:4px;}
+        .hm-sl{font-size:11px;font-weight:300;color:rgba(26,22,16,0.35);letter-spacing:0.5px;}
+        .hm-feats{display:grid;grid-template-columns:repeat(4,1fr);width:100%;max-width:540px;border-top:1px solid rgba(160,120,40,0.08);animation:hmUp 0.7s 0.4s ease both;}
+        .hm-feat{padding:26px 16px;text-align:center;border-right:1px solid rgba(160,120,40,0.08);transition:background 0.2s;}
         .hm-feat:last-child{border-right:none;}
-        .hm-feat:hover{background:rgba(201,168,76,0.04);}
+        .hm-feat:hover{background:rgba(160,120,40,0.05);}
         .hm-fi{font-size:18px;margin-bottom:8px;display:block;}
-        .hm-fn{font-size:12px;font-weight:500;color:rgba(232,220,200,0.55);}
+        .hm-fn{font-size:12px;font-weight:500;color:rgba(26,22,16,0.45);}
         @keyframes hmUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
         @media(max-width:540px){.hm-feats{grid-template-columns:repeat(2,1fr);}.hm-feat:nth-child(2){border-right:none;}}
       `}</style>
@@ -86,10 +87,9 @@ const Home = () => {
 const App = () => {
   const { user } = useAuth();
   return (
-    <div style={{ display:'flex', flexDirection:'column', minHeight:'100vh', background:'#0d1117' }}>
+    <div style={{ display:'flex', flexDirection:'column', minHeight:'100vh', background:'#f7f3ee' }}>
       <Navbar />
-      <main style={{ flex:1 }}>
-        jsx<main style={{ flex: 1, paddingTop: '60px' }}></main>
+      <main style={{ flex:1, paddingTop:'60px' }}>
         <Routes>
           <Route path="/"               element={<Home />} />
           <Route path="/login"          element={!user ? <Login />    : <Navigate to="/" />} />
