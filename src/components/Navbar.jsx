@@ -401,17 +401,17 @@ const Navbar = () => {
 }
 
 .nv-btn-register {
-  background: #a07828 !important;
+  background:#0ea1ce  !important;
   color: #fff !important;
 }
 
 .nv-btn-register:hover {
-  background: #b5892e !important;
+  background: #0ea1ce !important;
 }
 
 /* MOBILE */
 .nv-hamburger span {
-  background: #a07828 !important;
+  background: #0ea1ce  !important;
 }
 
 .nv-drawer {
@@ -423,7 +423,7 @@ const Navbar = () => {
 }
 
 .nv-drawer-link.active {
-  color: #a07828 !important;
+  color: #0ea1ce  !important;
 }
 `}</style>
 
