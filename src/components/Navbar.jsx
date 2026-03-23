@@ -311,6 +311,121 @@ const Navbar = () => {
           .nv-bar { padding: 0 16px; }
         }
       `}</style>
+      <style>{`
+/* ===== FORCE BOOKNEST THEME OVERRIDE ===== */
+
+.nv-root.scrolled {
+  background: rgba(247,243,238,0.95) !important;
+  box-shadow: 0 1px 0 rgba(160,120,40,0.15) !important;
+}
+
+.nv-root.top {
+  background: linear-gradient(180deg, rgba(247,243,238,0.9) 0%, transparent 100%) !important;
+}
+
+/* BRAND */
+.nv-brand-dot {
+  background: #a07828 !important;
+  box-shadow: 0 0 8px 2px rgba(160,120,40,0.6) !important;
+}
+
+.nv-brand-text {
+  color: #1a1610 !important;
+}
+
+.nv-brand-text em {
+  color: #a07828 !important;
+}
+
+/* LINKS */
+.nv-link {
+  color: rgba(26,22,16,0.6) !important;
+}
+
+.nv-link:hover {
+  color: #a07828 !important;
+  background: rgba(160,120,40,0.08) !important;
+}
+
+.nv-link.active {
+  color: #a07828 !important;
+  background: rgba(160,120,40,0.12) !important;
+}
+
+.nv-link.active::after {
+  background: #a07828 !important;
+}
+
+/* USER */
+.nv-avatar {
+  background: rgba(160,120,40,0.12) !important;
+  border: 1px solid rgba(160,120,40,0.25) !important;
+}
+
+.nv-avatar:hover {
+  background: rgba(160,120,40,0.2) !important;
+}
+
+.nv-avatar-circle {
+  background: #a07828 !important;
+  color: #fff !important;
+}
+
+.nv-avatar-name {
+  color: #1a1610 !important;
+}
+
+/* DROPDOWN */
+.nv-dropdown {
+  background: #faf7f2 !important;
+  border: 1px solid rgba(160,120,40,0.2) !important;
+}
+
+.nv-dropdown-item {
+  color: rgba(26,22,16,0.7) !important;
+}
+
+.nv-dropdown-item:hover {
+  background: rgba(160,120,40,0.1) !important;
+  color: #a07828 !important;
+}
+
+/* BUTTONS */
+.nv-btn-login {
+  color: #a07828 !important;
+  border: 1px solid rgba(160,120,40,0.4) !important;
+}
+
+.nv-btn-login:hover {
+  background: rgba(160,120,40,0.1) !important;
+}
+
+.nv-btn-register {
+  background: #a07828 !important;
+  color: #fff !important;
+}
+
+.nv-btn-register:hover {
+  background: #b5892e !important;
+}
+
+/* MOBILE */
+.nv-hamburger span {
+  background: #a07828 !important;
+}
+
+.nv-drawer {
+  background: #f7f3ee !important;
+}
+
+.nv-drawer-link {
+  color: rgba(26,22,16,0.7) !important;
+}
+
+.nv-drawer-link.active {
+  color: #a07828 !important;
+}
+`}</style>
 
       <nav className={`nv-root ${scrolled ? 'scrolled' : 'top'}`} role="navigation" aria-label="Main navigation">
         <div className="nv-bar">
