@@ -325,7 +325,7 @@ const Navbar = () => {
 
 /* BRAND */
 .nv-brand-dot {
-  background: #a07828 !important;
+  background: #0ea1ce !important;
   box-shadow: 0 0 8px 2px rgba(160,120,40,0.6) !important;
 }
 
@@ -334,7 +334,7 @@ const Navbar = () => {
 }
 
 .nv-brand-text em {
-  color: #a07828 !important;
+  color: #0ea1ce !important;
 }
 
 /* LINKS */
@@ -343,17 +343,17 @@ const Navbar = () => {
 }
 
 .nv-link:hover {
-  color: #a07828 !important;
+  color: #0ea1ce !important;
   background: rgba(160,120,40,0.08) !important;
 }
 
 .nv-link.active {
-  color: #a07828 !important;
+  color: #0ea1ce !important;
   background: rgba(160,120,40,0.12) !important;
 }
 
 .nv-link.active::after {
-  background: #a07828 !important;
+  background: #0ea1ce !important;
 }
 
 /* USER */
@@ -367,7 +367,7 @@ const Navbar = () => {
 }
 
 .nv-avatar-circle {
-  background: #a07828 !important;
+  background: #0ea1ce !important;
   color: #fff !important;
 }
 
@@ -387,7 +387,7 @@ const Navbar = () => {
 
 .nv-dropdown-item:hover {
   background: rgba(160,120,40,0.1) !important;
-  color: #a07828 !important;
+  color: #0ea1ce !important;
 }
 
 /* BUTTONS */
