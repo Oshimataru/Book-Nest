@@ -431,7 +431,7 @@ const Navbar = () => {
         <div className="nv-bar">
 
           {/* Brand */}
-          <div className="nv-brand" onClick={() => navigate('/')} role="link" aria-label="BookNest home">
+          <div className="nv-brand" onClick={() => navigate('/')} role="link" aria-label="BOOK-NEST home">
             <div className="nv-brand-dot" />
             <span className="nv-brand-text">Book<em>Nest</em></span>
           </div>
