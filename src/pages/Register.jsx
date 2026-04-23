@@ -6,117 +6,311 @@ import { useAuth } from '../context/AuthContext';
 const Register = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
+    const [accepted, setAccepted] = useState(false);
 
-    const [formData, setFormData] = useState({ name: '', email: '', password: '', phone: '' });
-    const [error,    setError]    = useState('');
-    const [loading,  setLoading]  = useState(false);
+    const [formData, setFormData] = useState({ 
+        name: '', 
+        email: '', 
+        password: '', 
+        confirmPassword: '', 
+        phone: '' 
+    });
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
+    const validateForm = () => {
+        const { name, email, password, confirmPassword, phone } = formData;
+
+        if (!/^[A-Za-z ]{3,}$/.test(name)) return "Enter valid name (min 3 letters)";
+        if (!/^[6-9]\d{9}$/.test(phone)) return "Enter valid 10-digit phone number";
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "Enter valid email address";
+        
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        if (!passwordRegex.test(password)) {
+            return "Password: 8+ chars, Uppercase, Lowercase, & Number";
+        }
+
+        if (password !== confirmPassword) return "Passwords do not match";
+
+        return null;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true); setError('');
+        if (!accepted) {
+    setError("You must accept Terms & Conditions");
+    return;
+}
+        const validationError = validateForm();
+        if (validationError) {
+            setError(validationError);
+            return;
+        }
+
+        setLoading(true); 
+        setError('');
+
         try {
-            const res = await registerUser(formData);
+            const { confirmPassword, ...dataToSend } = formData;
+            const res = await registerUser(dataToSend);
             login(res.data, res.data.token);
             navigate('/');
         } catch (err) {
             setError(err.response?.data || 'Something went wrong.');
-        } finally { setLoading(false); }
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
         <>
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Fraunces:ital,wght@0,600;1,400&display=swap');
-                .rg*{box-sizing:border-box;margin:0;padding:0;}
-                .rg{min-height:100vh;background:#f7f3ee;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;padding:32px 20px;}
-                .rg-box{width:100%;max-width:400px;}
+                
+                .rg-container {
+                    min-height: 100vh;
+                    background: #000000;
+                    font-family: 'Inter', sans-serif;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 40px 20px;
+                }
 
-                .rg-brand{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:#1a1610;letter-spacing:-0.3px;margin-bottom:32px;cursor:pointer;width:fit-content;}
-                .rg-brand span{color:#a07828;}
+                .rg-box {
+                    width: 100%;
+                    max-width: 400px;
+                    background: #0a0a0a;
+                    padding: 32px;
+                    border: 1px solid #1a1a1a;
+                    border-radius: 12px;
+                    box-sizing: border-box; /* Ensures padding doesn't push width out */
+                }
 
-                .rg-title{font-family:'Fraunces',serif;font-size:clamp(24px,4vw,32px);font-weight:600;color:#1a1610;letter-spacing:-0.5px;line-height:1;margin-bottom:6px;}
-                .rg-title span{color:#a07828;font-style:italic;font-weight:400;}
-                .rg-sub{font-size:13px;font-weight:300;color:rgba(26,22,16,0.4);margin-bottom:28px;}
+                .rg-brand {
+                    font-family: 'Fraunces', serif;
+                    font-size: 22px;
+                    font-weight: 600;
+                    color: #ffffff;
+                    margin-bottom: 24px;
+                    cursor: pointer;
+                    width: fit-content;
+                }
+                .rg-brand span { color: #d4af37; }
 
-                .rg-err{padding:11px 14px;border:1px solid rgba(180,60,50,0.2);border-radius:4px;background:rgba(200,60,50,0.05);color:rgba(180,60,50,0.8);font-size:13px;font-weight:300;margin-bottom:20px;}
+                .rg-title {
+                    font-family: 'Fraunces', serif;
+                    font-size: 28px;
+                    color: #ffffff;
+                    margin-bottom: 6px;
+                }
+                .rg-title span { color: #d4af37; font-style: italic; font-weight: 400; }
 
-                .rg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-                .rg-group{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
-                .rg-group.no-mb{margin-bottom:0;}
-                .rg-label{font-size:12px;font-weight:400;color:rgba(26,22,16,0.45);}
-                .rg-input{padding:10px 13px;background:#faf7f2;border:1px solid rgba(160,120,40,0.16);border-radius:4px;color:#1a1610;font-family:'Inter',sans-serif;font-size:13.5px;font-weight:300;outline:none;transition:border-color 0.15s,background 0.15s;width:100%;}
-                .rg-input::placeholder{color:rgba(26,22,16,0.2);}
-                .rg-input:focus{border-color:rgba(160,120,40,0.4);background:#f7f3ee;}
+                .rg-sub {
+                    font-size: 13px;
+                    color: #666;
+                    margin-bottom: 24px;
+                    line-height: 1.4;
+                }
 
-                .rg-btn{width:100%;margin-top:8px;padding:12px;background:#a07828;color:#fff;border:none;border-radius:4px;font-family:'Inter',sans-serif;font-size:13.5px;font-weight:500;cursor:pointer;transition:background 0.15s,transform 0.15s;}
-                .rg-btn:hover:not(:disabled){background:#b5892e;transform:translateY(-1px);}
-                .rg-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+                .rg-err {
+                    padding: 12px;
+                    border-radius: 6px;
+                    background: rgba(255, 69, 58, 0.1);
+                    color: #ff453a;
+                    font-size: 13px;
+                    margin-bottom: 20px;
+                    border: 1px solid rgba(255, 69, 58, 0.2);
+                }
 
-                .rg-divider{height:1px;background:rgba(160,120,40,0.1);margin:22px 0;}
+                .rg-group {
+                    margin-bottom: 16px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+                }
 
-                .rg-footer{font-size:13px;font-weight:300;color:rgba(26,22,16,0.4);text-align:center;}
-                .rg-footer a{color:#a07828;text-decoration:none;font-weight:400;transition:color 0.15s;}
-                .rg-footer a:hover{color:#b5892e;}
+                .rg-label {
+                    font-size: 11px;
+                    color: #888;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                }
 
-                .rg-terms{font-size:11.5px;font-weight:300;color:rgba(26,22,16,0.28);text-align:center;margin-top:12px;line-height:1.5;}
+                .rg-input {
+                    padding: 12px 14px;
+                    background: #121212;
+                    border: 1px solid #222;
+                    border-radius: 6px;
+                    color: #fff;
+                    font-size: 14px;
+                    width: 100%;
+                    box-sizing: border-box; /* Critical for keeping inputs inside the box */
+                    transition: all 0.3s ease;
+                }
 
-                @media(max-width:400px){.rg-row{grid-template-columns:1fr;}}
+                .rg-input:hover { border-color: #444; }
+                .rg-input:focus {
+                    outline: none;
+                    border-color: #d4af37;
+                    background: #181818;
+                    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+                }
+
+                /* Name and Phone row stays side-by-side */
+                .rg-row {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 12px;
+                    margin-bottom: 16px;
+                }
+
+                .rg-btn {
+                    width: 100%;
+                    padding: 14px;
+                    background: #d4af37;
+                    color: #000;
+                    border: none;
+                    border-radius: 6px;
+                    font-weight: 600;
+                    font-size: 14px;
+                    margin-top: 10px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
+
+                .rg-btn:hover:not(:disabled) {
+                    background: #f1c40f;
+                    transform: translateY(-1px);
+                }
+
+                .rg-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+                .rg-divider {
+                    height: 1px;
+                    background: #1a1a1a;
+                    margin: 24px 0;
+                }
+
+                .rg-footer {
+                    text-align: center;
+                    color: #666;
+                    font-size: 13px;
+                }
+                .rg-footer a {
+                    color: #d4af37;
+                    text-decoration: none;
+                    font-weight: 500;
+                }
+                    /* TERMS CHECKBOX */
+.rg-check {
+    display: flex;
+    justify-content: center;   /* 🔥 centers horizontally */
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: #888;
+    text-align: center;
+}
+
+.rg-check input {
+    accent-color: #d4af37;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
+.rg-check label {
+    cursor: pointer;
+}
+
+.rg-check span {
+    color: #d4af37;
+    font-weight: 500;
+}
+
+                @media (max-width: 400px) {
+                    .rg-row { grid-template-columns: 1fr; gap: 16px; }
+                }
             `}</style>
 
-            <div className="rg">
+            <div className="rg-container">
                 <div className="rg-box">
                     <div className="rg-brand" onClick={() => navigate('/')}>Book<span>Nest</span></div>
 
-                    <h1 className="rg-title">Create <span>account</span></h1>
-                    <p className="rg-sub">Join BookNest and start discovering books near you.</p>
+                    <h1 className="rg-title">Join <span>us</span></h1>
+                    <p className="rg-sub">Experience the darker side of BookNest.</p>
 
                     {error && <div className="rg-err">{error}</div>}
 
                     <form onSubmit={handleSubmit}>
+                        {/* Name and Phone still shared for compactness */}
                         <div className="rg-row">
-                            <div className="rg-group no-mb">
+                            <div className="rg-group" style={{marginBottom: 0}}>
                                 <label className="rg-label">Full Name</label>
                                 <input className="rg-input" type="text" name="name"
-                                    placeholder="Your name"
+                                    placeholder="Name"
                                     value={formData.name}
                                     onChange={handleChange} required />
                             </div>
-                            <div className="rg-group no-mb">
+                            <div className="rg-group" style={{marginBottom: 0}}>
                                 <label className="rg-label">Phone</label>
                                 <input className="rg-input" type="text" name="phone"
-                                    placeholder="Phone number"
+                                    placeholder="Number"
                                     value={formData.phone}
                                     onChange={handleChange} required />
                             </div>
                         </div>
 
-                        <div className="rg-group" style={{marginTop:'14px'}}>
-                            <label className="rg-label">Email</label>
+                        <div className="rg-group">
+                            <label className="rg-label">Email Address</label>
                             <input className="rg-input" type="email" name="email"
                                 placeholder="you@example.com"
                                 value={formData.email}
                                 onChange={handleChange} required />
                         </div>
 
+                        {/* Password - Taken out of rg-row to be on its own line */}
                         <div className="rg-group">
                             <label className="rg-label">Password</label>
                             <input className="rg-input" type="password" name="password"
-                                placeholder="Create a password"
+                                placeholder="Min. 8 characters"
                                 value={formData.password}
                                 onChange={handleChange} required />
                         </div>
 
-                        <button className="rg-btn" type="submit" disabled={loading}>
-                            {loading ? 'Creating account…' : 'Create Account'}
-                        </button>
+                        {/* Confirm Password - Now on its own line beneath Password */}
+                        <div className="rg-group">
+                            <label className="rg-label">Confirm Password</label>
+                            <input className="rg-input" type="password" name="confirmPassword"
+                                placeholder="Repeat your password"
+                                value={formData.confirmPassword}
+                                onChange={handleChange} required />
+                        </div>
 
-                        <p className="rg-terms">By registering you agree to our Terms of Use and Privacy Policy.</p>
+                        <button className="rg-btn" type="submit" disabled={loading}>
+                            {loading ? 'Verifying...' : 'Create Account'}
+                        </button>
                     </form>
 
                     <div className="rg-divider" />
-                    <p className="rg-footer">Already have an account? <Link to="/login">Sign in</Link></p>
+                    <div className="rg-check">
+    <input
+        type="checkbox"
+        id="terms"
+        checked={accepted}
+        onChange={(e) => setAccepted(e.target.checked)}
+    />
+    <label htmlFor="terms">
+        I agree to the <span>Terms & Conditions</span>
+    </label>
+    
+                    <div className="rg-divider" />
+</div>
+                    <p className="rg-footer">Member already? <Link to="/login">Sign in</Link></p>
                 </div>
             </div>
         </>

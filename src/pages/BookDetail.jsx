@@ -4,7 +4,7 @@ import { getBookById, deleteBook } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import Reviews from '../components/Reviews';
 
-const typeColor = { SELL: '#a07828', RENT: '#4a7fa5', EXCHANGE: '#7a68a8' };
+const typeColor = { SELL: '#d4af37', RENT: '#4a7fa5', EXCHANGE: '#7a68a8' };
 
 const BookDetail = () => {
     const { id } = useParams();
@@ -33,81 +33,214 @@ const BookDetail = () => {
         <>
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Fraunces:ital,wght@0,600;1,400&display=swap');
-                .bd*{box-sizing:border-box;margin:0;padding:0;}
-                .bd{min-height:100vh;background:#f7f3ee;font-family:'Inter',sans-serif;color:#1a1610;padding:48px 32px 80px;}
-                .bd-wrap{max-width:960px;margin:0 auto;}
+                
+                .bd {
+                    min-height: 100vh;
+                    background: #000000;
+                    font-family: 'Inter', sans-serif;
+                    color: #ffffff;
+                    padding: 100px 32px 80px;
+                }
+                .bd-wrap { max-width: 960px; margin: 0 auto; }
 
                 /* Back link */
-                .bd-back{display:inline-flex;align-items:center;gap:6px;background:none;border:none;font-family:'Inter',sans-serif;font-size:13px;color:rgba(26,22,16,0.38);cursor:pointer;padding:0;margin-bottom:28px;transition:color 0.15s;}
-                .bd-back:hover{color:#a07828;}
+                .bd-back {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    background: none;
+                    border: none;
+                    font-family: 'Inter', sans-serif;
+                    font-size: 13px;
+                    color: #888;
+                    cursor: pointer;
+                    padding: 0;
+                    margin-bottom: 28px;
+                    transition: color 0.2s;
+                }
+                .bd-back:hover { color: #d4af37; }
 
                 /* States */
-                .bd-loading{text-align:center;padding:80px 0;font-size:14px;font-weight:300;color:rgba(26,22,16,0.3);}
-                .bd-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#a07828;margin:0 3px;animation:bdB 1.2s ease-in-out infinite;}
-                .bd-dot:nth-child(2){animation-delay:0.15s;}.bd-dot:nth-child(3){animation-delay:0.3s;}
-                @keyframes bdB{0%,80%,100%{transform:scale(0.6);opacity:0.3;}40%{transform:scale(1);opacity:1;}}
-                .bd-err{padding:14px 18px;border:1px solid rgba(180,60,50,0.2);border-radius:4px;background:rgba(200,60,50,0.05);color:rgba(180,60,50,0.8);font-size:13px;font-weight:300;}
+                .bd-loading { text-align: center; padding: 80px 0; color: #d4af37; }
+                .bd-dot {
+                    display: inline-block;
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    background: #d4af37;
+                    margin: 0 3px;
+                    animation: bdB 1.2s ease-in-out infinite;
+                }
+                .bd-dot:nth-child(2) { animation-delay: 0.15s; }
+                .bd-dot:nth-child(3) { animation-delay: 0.3s; }
+                @keyframes bdB { 0%, 80%, 100% { transform: scale(0.6); opacity: 0.3; } 40% { transform: scale(1); opacity: 1; } }
+                
+                .bd-err {
+                    padding: 14px 18px;
+                    border: 1px solid #ff453a;
+                    border-radius: 4px;
+                    background: rgba(255, 69, 58, 0.1);
+                    color: #ff453a;
+                    font-size: 13px;
+                }
 
                 /* Main card */
-                .bd-card{display:grid;grid-template-columns:300px 1fr;gap:0;border:1px solid rgba(160,120,40,0.12);background:#faf7f2;margin-bottom:1px;}
+                .bd-card {
+                    display: grid;
+                    grid-template-columns: 320px 1fr;
+                    gap: 0;
+                    border: 1px solid #1a1a1a;
+                    background: #0a0a0a;
+                    border-radius: 12px;
+                    overflow: hidden;
+                }
 
                 /* Image panel */
-                .bd-img-panel{border-right:1px solid rgba(160,120,40,0.1);position:relative;}
-                .bd-img{width:100%;aspect-ratio:3/4;overflow:hidden;background:#ede8e0;}
-                .bd-img img{width:100%;height:100%;object-fit:cover;}
-                .bd-noimg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:52px;color:rgba(160,120,40,0.18);background:repeating-linear-gradient(45deg,rgba(160,120,40,0.03),rgba(160,120,40,0.03) 1px,transparent 1px,transparent 12px);}
-                .bd-type-badge{position:absolute;top:14px;left:14px;padding:4px 10px;border-radius:2px;font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:#fff;}
+                .bd-img-panel { border-right: 1px solid #1a1a1a; position: relative; background: #111; }
+                .bd-img { width: 100%; aspect-ratio: 3/4; overflow: hidden; }
+                .bd-img img { width: 100%; height: 100%; object-fit: cover; }
+                .bd-noimg {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 60px;
+                    color: #222;
+                }
+                .bd-type-badge {
+                    position: absolute;
+                    top: 14px;
+                    left: 14px;
+                    padding: 4px 12px;
+                    border-radius: 4px;
+                    font-size: 10px;
+                    font-weight: 700;
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                    color: #000;
+                }
 
                 /* Info panel */
-                .bd-info{padding:28px 32px;display:flex;flex-direction:column;gap:0;}
-                .bd-book-title{font-family:'Fraunces',serif;font-size:clamp(22px,3vw,32px);font-weight:600;color:#1a1610;line-height:1.15;letter-spacing:-0.5px;margin-bottom:6px;}
-                .bd-author{font-size:14px;font-weight:300;color:rgba(26,22,16,0.42);margin-bottom:20px;}
+                .bd-info { padding: 32px 40px; display: flex; flex-direction: column; }
+                .bd-book-title {
+                    font-family: 'Fraunces', serif;
+                    font-size: clamp(24px, 4vw, 36px);
+                    font-weight: 600;
+                    color: #ffffff;
+                    line-height: 1.1;
+                    margin-bottom: 8px;
+                }
+                .bd-author { font-size: 16px; color: #888; margin-bottom: 24px; }
 
                 /* Meta rows */
-                .bd-meta{display:flex;flex-direction:column;gap:0;margin-bottom:20px;border:1px solid rgba(160,120,40,0.1);border-radius:4px;overflow:hidden;}
-                .bd-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(160,120,40,0.08);}
-                .bd-row:last-child{border-bottom:none;}
-                .bd-row-label{font-size:12px;font-weight:400;color:rgba(26,22,16,0.38);}
-                .bd-row-value{font-size:13px;font-weight:400;color:rgba(26,22,16,0.75);}
-                .bd-price{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:#a07828;}
-                .bd-price-exchange{font-size:13px;font-weight:400;font-family:'Inter',sans-serif;color:rgba(160,120,40,0.6);}
+                .bd-meta {
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 24px;
+                    border: 1px solid #1a1a1a;
+                    border-radius: 8px;
+                    background: #111;
+                }
+                .bd-row {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 12px 16px;
+                    border-bottom: 1px solid #1a1a1a;
+                }
+                .bd-row:last-child { border-bottom: none; }
+                .bd-row-label { font-size: 12px; color: #555; text-transform: uppercase; letter-spacing: 1px; }
+                .bd-row-value { font-size: 14px; color: #ddd; }
+                .bd-price { font-family: 'Fraunces', serif; font-size: 22px; color: #d4af37; }
+                .bd-price-exchange { color: #7a68a8; font-weight: 500; }
 
                 /* Description */
-                .bd-section-label{font-size:10.5px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(160,120,40,0.45);margin-bottom:8px;}
-                .bd-desc{font-size:14px;font-weight:300;color:rgba(26,22,16,0.6);line-height:1.7;margin-bottom:20px;}
+                .bd-section-label {
+                    font-size: 10px;
+                    font-weight: 600;
+                    letter-spacing: 2px;
+                    text-transform: uppercase;
+                    color: #d4af37;
+                    margin-bottom: 8px;
+                    opacity: 0.8;
+                }
+                .bd-desc {
+                    font-size: 15px;
+                    color: #bbb;
+                    line-height: 1.6;
+                    margin-bottom: 24px;
+                }
 
                 /* Seller */
-                .bd-seller{padding:14px;background:rgba(160,120,40,0.04);border:1px solid rgba(160,120,40,0.1);border-radius:4px;margin-bottom:24px;}
-                .bd-seller-name{font-size:14px;font-weight:500;color:#1a1610;margin-bottom:3px;}
-                .bd-seller-email{font-size:12px;font-weight:300;color:rgba(26,22,16,0.38);}
+                .bd-seller {
+                    padding: 16px;
+                    background: rgba(255,255,255,0.03);
+                    border: 1px solid #1a1a1a;
+                    border-radius: 8px;
+                    margin-bottom: 32px;
+                }
+                .bd-seller-name { font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 4px; }
+                .bd-seller-email { font-size: 13px; color: #666; }
 
                 /* Actions */
-                .bd-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;}
-                .bd-btn-primary{padding:11px 24px;background:#a07828;color:#fff;border:none;border-radius:4px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:background 0.15s,transform 0.15s;}
-                .bd-btn-primary:hover{background:#b5892e;transform:translateY(-1px);}
-                .bd-btn-edit{padding:11px 20px;background:transparent;border:1px solid rgba(160,120,40,0.25);border-radius:4px;color:#a07828;font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;transition:background 0.15s,border-color 0.15s;}
-                .bd-btn-edit:hover{background:rgba(160,120,40,0.07);border-color:rgba(160,120,40,0.45);}
-                .bd-btn-del{padding:11px 20px;background:transparent;border:1px solid rgba(180,60,50,0.2);border-radius:4px;color:rgba(180,60,50,0.65);font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;transition:background 0.15s,border-color 0.15s,color 0.15s;}
-                .bd-btn-del:hover{background:rgba(200,60,50,0.05);border-color:rgba(180,60,50,0.4);color:rgba(180,60,50,0.9);}
+                .bd-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: auto; }
+                .bd-btn-primary {
+                    padding: 12px 28px;
+                    background: #d4af37;
+                    color: #000;
+                    border: none;
+                    border-radius: 6px;
+                    font-weight: 600;
+                    font-size: 14px;
+                    cursor: pointer;
+                    transition: 0.2s;
+                }
+                .bd-btn-primary:hover { background: #f1c40f; transform: translateY(-2px); }
+                
+                .bd-btn-edit, .bd-btn-del {
+                    padding: 12px 24px;
+                    background: transparent;
+                    border-radius: 6px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: 0.2s;
+                }
+                .bd-btn-edit { border: 1px solid #333; color: #fff; }
+                .bd-btn-edit:hover { border-color: #d4af37; color: #d4af37; }
+                
+                .bd-btn-del { border: 1px solid rgba(255, 69, 58, 0.3); color: #ff453a; }
+                .bd-btn-del:hover { background: rgba(255, 69, 58, 0.1); border-color: #ff453a; }
 
                 /* Reviews section */
-                .bd-reviews{border:1px solid rgba(160,120,40,0.12);border-top:none;background:#faf7f2;padding:28px 32px;}
-                .bd-reviews-title{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:#1a1610;letter-spacing:-0.3px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(160,120,40,0.1);}
-                .bd-reviews-title span{color:#a07828;font-style:italic;font-weight:400;}
+                .bd-reviews {
+                    margin-top: 24px;
+                    background: #0a0a0a;
+                    border: 1px solid #1a1a1a;
+                    border-radius: 12px;
+                    padding: 32px;
+                }
+                .bd-reviews-title {
+                    font-family: 'Fraunces', serif;
+                    font-size: 22px;
+                    color: #fff;
+                    margin-bottom: 24px;
+                    padding-bottom: 16px;
+                    border-bottom: 1px solid #1a1a1a;
+                }
+                .bd-reviews-title span { color: #d4af37; font-style: italic; }
 
-                @media(max-width:700px){
-                    .bd{padding:32px 16px 60px;}
-                    .bd-card{grid-template-columns:1fr;}
-                    .bd-img-panel{border-right:none;border-bottom:1px solid rgba(160,120,40,0.1);}
-                    .bd-img{aspect-ratio:4/3;}
-                    .bd-info{padding:20px;}
-                    .bd-reviews{padding:20px;}
+                @media(max-width:768px){
+                    .bd { padding: 80px 16px 60px; }
+                    .bd-card { grid-template-columns: 1fr; }
+                    .bd-img-panel { border-right: none; border-bottom: 1px solid #1a1a1a; }
+                    .bd-info { padding: 24px; }
                 }
             `}</style>
 
             <div className="bd">
                 <div className="bd-wrap">
-                    <button className="bd-back" onClick={() => navigate('/books')}>← Back to books</button>
+                    <button className="bd-back" onClick={() => navigate('/books')}>← Back to gallery</button>
 
                     {loading ? (
                         <div className="bd-loading"><span className="bd-dot"/><span className="bd-dot"/><span className="bd-dot"/></div>
@@ -118,7 +251,6 @@ const BookDetail = () => {
                         return (
                             <>
                                 <div className="bd-card">
-                                    {/* Image */}
                                     <div className="bd-img-panel">
                                         <div className="bd-img">
                                             {book.imageUrl
@@ -126,12 +258,11 @@ const BookDetail = () => {
                                                 : <div className="bd-noimg">📚</div>
                                             }
                                         </div>
-                                        <span className="bd-type-badge" style={{ background: typeColor[book.type] || '#a07828' }}>
+                                        <span className="bd-type-badge" style={{ background: typeColor[book.type] || '#d4af37' }}>
                                             {book.type}
                                         </span>
                                     </div>
 
-                                    {/* Info */}
                                     <div className="bd-info">
                                         <div className="bd-book-title">{book.title}</div>
                                         <div className="bd-author">by {book.author}</div>
@@ -191,7 +322,6 @@ const BookDetail = () => {
                                     </div>
                                 </div>
 
-                                {/* Reviews */}
                                 <div className="bd-reviews">
                                     <div className="bd-reviews-title">Reviews & <span>Ratings</span></div>
                                     <Reviews bookId={book.id} sellerId={book.seller?.email} />
@@ -203,6 +333,6 @@ const BookDetail = () => {
             </div>
         </>
     );
-};
+}; 
 
 export default BookDetail;

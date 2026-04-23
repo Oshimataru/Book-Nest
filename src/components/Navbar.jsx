@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import axios from "axios";
 
 const NAV_LINKS = [
   { label: 'Browse',       path: '/books',        auth: false },
@@ -9,7 +10,10 @@ const NAV_LINKS = [
   { label: 'My Orders',    path: '/my-orders',    auth: true  },
   { label: 'Exchanges',    path: '/my-exchanges', auth: true  },
   { label: 'Book Clubs',   path: '/clubs',        auth: true  },
+  { label: 'Contact',      path: '/contact',      auth: false },
+  // { label: 'My Tickets', path: '/my-tickets', auth: true },
   { label: '🏆 Leaderboard', path: '/leaderboard', auth: true },
+
 ];
 
 const Navbar = () => {
@@ -19,6 +23,7 @@ const Navbar = () => {
 
   const [scrolled,     setScrolled]     = useState(false);
   const [menuOpen,     setMenuOpen]     = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   /* Shrink navbar on scroll */
@@ -28,6 +33,28 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+  const fetchUnread = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await axios.get(
+        "http://localhost:8082/api/contact/my",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      const unread = res.data.filter(t => t.reply && !t.seen).length;
+      setUnreadCount(unread);
+
+    } catch {}
+  };
+
+  fetchUnread();
+}, []);
   /* Close mobile menu on route change */
   useEffect(() => { setMenuOpen(false); setDropdownOpen(false); }, [location.pathname]);
 
@@ -90,7 +117,7 @@ const Navbar = () => {
         .nv-brand-text {
           font-family: 'Playfair Display', serif;
           font-size: 20px; font-weight: 700;
-          color: #c8f0ec; letter-spacing: 0.3px;
+          color: #21c0b0; letter-spacing: 0.3px;
           line-height: 1;
         }
         .nv-brand-text em {
@@ -315,12 +342,13 @@ const Navbar = () => {
 /* ===== FORCE BOOKNEST THEME OVERRIDE ===== */
 
 .nv-root.scrolled {
-  background: rgba(247,243,238,0.95) !important;
+  background: rgba(12, 12, 12, 0.95) !important;
   box-shadow: 0 1px 0 rgba(160,120,40,0.15) !important;
+  
 }
 
 .nv-root.top {
-  background: linear-gradient(180deg, rgba(247,243,238,0.9) 0%, transparent 100%) !important;
+  background: linear-gradient(180deg, rgba(16, 16, 16, 0.9) 0%, transparent 100%) !important;
 }
 
 /* BRAND */
@@ -339,7 +367,7 @@ const Navbar = () => {
 
 /* LINKS */
 .nv-link {
-  color: rgba(26,22,16,0.6) !important;
+  color: rgba(255,255,255) !important;
 }
 
 .nv-link:hover {
@@ -358,27 +386,27 @@ const Navbar = () => {
 
 /* USER */
 .nv-avatar {
-  background: rgba(160,120,40,0.12) !important;
-  border: 1px solid rgba(160,120,40,0.25) !important;
+  background: rgba(24, 24, 24, 0.12) !important;
+  border: 1px solid rgba(11, 246, 218, 0.25) !important;
 }
 
 .nv-avatar:hover {
-  background: rgba(160,120,40,0.2) !important;
+  background: rgba(13, 13, 13, 0.2) !important;
 }
 
 .nv-avatar-circle {
-  background: #0ea1ce !important;
+  background: #0eb7eb !important;
   color: #fff !important;
 }
 
 .nv-avatar-name {
-  color: #1a1610 !important;
+  color: #ffffff !important;
 }
 
 /* DROPDOWN */
 .nv-dropdown {
-  background: #faf7f2 !important;
-  border: 1px solid rgba(160,120,40,0.2) !important;
+  background: #cdc1c1 !important;
+  border: 1px solid rgba(0, 255, 255, 0.2) !important;
 }
 
 .nv-dropdown-item {
@@ -397,12 +425,12 @@ const Navbar = () => {
 }
 
 .nv-btn-login:hover {
-  background: rgba(160,120,40,0.1) !important;
+  background: rgba(209, 213, 16, 0.1) !important;
 }
 
 .nv-btn-register {
   background:#0ea1ce  !important;
-  color: #fff !important;
+  color: #1a0404 !important;
 }
 
 .nv-btn-register:hover {
@@ -415,7 +443,7 @@ const Navbar = () => {
 }
 
 .nv-drawer {
-  background: #f7f3ee !important;
+  background: #11d8b0 !important;
 }
 
 .nv-drawer-link {
@@ -434,14 +462,14 @@ const Navbar = () => {
   font-style: italic !important;
   font-size: 24px !important;
   letter-spacing: 1px !important;
-  color: #1a1610 !important;
+  color: rgb(23, 54, 196) !important;
 }
 
 .nv-brand-text em {
   font-family: 'Cormorant Garamond', serif !important;
   font-style: italic !important;
   font-weight: 600 !important;
-  color: #a07828 !important;
+  color: #0a6a8b !important;
 }
 `}</style>
 
@@ -511,6 +539,28 @@ const Navbar = () => {
                         <button className="nv-dropdown-item" onClick={() => { navigate('/my-exchanges'); setDropdownOpen(false); }}>
                           🔄 My Exchanges
                         </button>
+                       <button
+  className="nv-dropdown-item"
+  onClick={() => {
+    navigate('/my-tickets');
+    setDropdownOpen(false);
+  }}
+  style={{ display: "flex", justifyContent: "space-between" }}
+>
+  <span>🎫 My Tickets</span>
+
+  {unreadCount > 0 && (
+    <span style={{
+      background: "red",
+      color: "white",
+      borderRadius: "50%",
+      padding: "2px 8px",
+      fontSize: "12px"
+    }}>
+      {unreadCount}
+    </span>
+  )}
+</button>
                         <div className="nv-dropdown-divider" />
                         <button className="nv-dropdown-item danger" onClick={handleLogout}>
                           🚪 Logout

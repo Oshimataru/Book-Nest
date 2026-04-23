@@ -44,85 +44,302 @@ const Books = () => {
 
     const available = filtered.filter(b => b.status === 'AVAILABLE');
 
-    const typeColor = { SELL:'#a07828', RENT:'#4a7fa5', EXCHANGE:'#7a68a8' };
+    // Updated Color Palette for Gold/Black theme
+    const typeColor = { SELL:'#FFC107', RENT:'#FFD54F', EXCHANGE:'#BDBDBD' };
 
     return (
         <>
-            <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Fraunces:ital,wght@0,600;1,400&display=swap');
-                .bk*{box-sizing:border-box;margin:0;padding:0;}
-                .bk{min-height:100vh;background:#f7f3ee;font-family:'Inter',sans-serif;color:#1a1610;padding:48px 32px 80px;}
+        <style>{`
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Fraunces:ital,wght@0,600;1,400&display=swap');
 
-                .bk-header{max-width:1100px;margin:0 auto 32px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;}
-                .bk-title{font-family:'Fraunces',serif;font-size:clamp(26px,4vw,40px);font-weight:600;color:#1a1610;letter-spacing:-0.5px;line-height:1;}
-                .bk-title span{color:#a07828;font-style:italic;font-weight:400;}
+.bk{
+    min-height:100vh;
+    background: #000000;
+    background-image: radial-gradient(circle at top, #0a0a0a 0%, #000000 100%);
+    font-family:'Inter',sans-serif;
+    color:#ffffff;
+    padding:60px 20px 100px;
+}
 
-                .bk-search{display:flex;border:1px solid rgba(160,120,40,0.2);border-radius:4px;overflow:hidden;flex:1;max-width:360px;min-width:220px;}
-                .bk-search input{flex:1;padding:10px 14px;background:#faf7f2;border:none;outline:none;font-family:'Inter',sans-serif;font-size:13px;color:#1a1610;}
-                .bk-search input::placeholder{color:rgba(26,22,16,0.25);}
-                .bk-search input:focus{background:#f7f3ee;}
-                .bk-search button{padding:10px 18px;background:#a07828;border:none;color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:background 0.15s;}
-                .bk-search button:hover{background:#b5892e;}
+/* HEADER */
+.bk-header{
+    max-width:1200px;
+    margin:0 auto 40px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:30px;
+    flex-wrap:wrap;
+}
 
-                .bk-filters{max-width:1100px;margin:0 auto 24px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-                .bk-sel,.bk-inp{padding:8px 12px;background:#faf7f2;border:1px solid rgba(160,120,40,0.16);border-radius:4px;color:rgba(26,22,16,0.6);font-family:'Inter',sans-serif;font-size:12.5px;outline:none;cursor:pointer;transition:border-color 0.15s,background 0.15s;appearance:none;-webkit-appearance:none;}
-                .bk-sel{padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='rgba(160,120,40,0.45)' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
-                .bk-sel:focus,.bk-inp:focus{border-color:rgba(160,120,40,0.4);background:#f7f3ee;color:rgba(26,22,16,0.9);}
-                .bk-sel option{background:#faf7f2;color:#1a1610;}
-                .bk-inp{width:96px;}
-                .bk-inp::placeholder{color:rgba(26,22,16,0.2);}
-                .bk-clear{padding:8px 14px;background:transparent;border:1px solid rgba(160,120,40,0.16);border-radius:4px;color:rgba(160,120,40,0.55);font-family:'Inter',sans-serif;font-size:12.5px;cursor:pointer;transition:border-color 0.15s,color 0.15s;margin-left:auto;}
-                .bk-clear:hover{border-color:rgba(160,120,40,0.4);color:#a07828;}
+.bk-title{
+    font-family:'Fraunces',serif;
+    font-size:clamp(32px, 5vw, 48px);
+    font-weight:600;
+    color:#fff;
+}
+.bk-title span{
+    color: #FFC107;
+    font-style: italic;
+    font-weight: 400;
+}
 
-                .bk-count{max-width:1100px;margin:0 auto 20px;font-size:12px;font-weight:300;color:rgba(26,22,16,0.3);}
-                .bk-count b{color:rgba(160,120,40,0.6);font-weight:400;}
+/* SEARCH */
+.bk-search{
+    display:flex;
+    border-radius:12px;
+    overflow:hidden;
+    max-width:400px;
+    width:100%;
+    background: #111;
+    border:1px solid rgba(255, 193, 7, 0.2);
+    transition: border-color 0.3s;
+}
+.bk-search:focus-within {
+    border-color: #FFC107;
+}
+.bk-search input{
+    flex:1;
+    padding:14px;
+    border:none;
+    background:transparent;
+    color:#fff;
+    outline:none;
+}
+.bk-search button{
+    padding:0 24px;
+    background: #FFC107;
+    color:#000;
+    font-weight: 600;
+    border:none;
+    cursor:pointer;
+}
 
-                .bk-loading,.bk-empty{max-width:1100px;margin:80px auto;text-align:center;font-size:14px;font-weight:300;color:rgba(26,22,16,0.3);}
-                .bk-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#a07828;margin:0 3px;animation:bkB 1.2s ease-in-out infinite;}
-                .bk-dot:nth-child(2){animation-delay:0.15s;}.bk-dot:nth-child(3){animation-delay:0.3s;}
-                @keyframes bkB{0%,80%,100%{transform:scale(0.6);opacity:0.3;}40%{transform:scale(1);opacity:1;}}
+/* FILTERS */
+.bk-filters{
+    max-width:1200px;
+    margin:0 auto 40px;
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
 
-                .bk-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1px;border:1px solid rgba(160,120,40,0.1);}
+.bk-sel, .bk-inp{
+    padding:12px 16px;
+    border-radius:8px;
+    border:1px solid rgba(255, 255, 255, 0.05);
+    background: #0a0a0a;
+    color:#fff;
+    outline:none;
+    font-size:14px;
+    transition: border-color 0.2s;
+}
+.bk-sel:focus, .bk-inp:focus {
+    border-color: #FFC107;
+}
 
-                .bk-card{background:#f7f3ee;cursor:pointer;transition:background 0.18s;display:flex;flex-direction:column;border-right:1px solid rgba(160,120,40,0.08);border-bottom:1px solid rgba(160,120,40,0.08);position:relative;}
-                .bk-card:hover{background:#faf7f2;}
-                .bk-card:hover .bk-arrow{opacity:1;transform:translate(0,0);}
+/* GRID */
+.bk-grid{
+    max-width:1200px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:30px;
+}
 
-                .bk-img{width:100%;aspect-ratio:3/4;background:#ede8e0;overflow:hidden;position:relative;border-bottom:1px solid rgba(160,120,40,0.08);}
-                .bk-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s;}
-                .bk-card:hover .bk-img img{transform:scale(1.04);}
-                .bk-noimg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:36px;color:rgba(160,120,40,0.2);background:repeating-linear-gradient(45deg,rgba(160,120,40,0.03),rgba(160,120,40,0.03) 1px,transparent 1px,transparent 12px);}
+/* CARD */
+.bk-card{
+    background: #0a0a0a;
+    border-radius:16px;
+    overflow:hidden;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    border:1px solid rgba(255, 255, 255, 0.05);
+    transition:all 0.3s ease; /* KEPT YOUR ANIMATION */
+    position:relative;
+}
 
-                .bk-badge{position:absolute;top:10px;left:10px;padding:3px 9px;border-radius:2px;font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:#fff;}
+/* HOVER ANIMATION - KEPT AS REQUESTED */
+.bk-card:hover{
+    transform:translateY(-8px) scale(1.02);
+    box-shadow:0 30px 60px rgba(0,0,0,0.8);
+    border-color:rgba(255, 193, 7, 0.4);
+}
 
-                .bk-body{padding:16px;flex:1;display:flex;flex-direction:column;gap:4px;}
-                .bk-book-title{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:#1a1610;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-                .bk-author{font-size:12px;font-weight:300;color:rgba(26,22,16,0.38);}
-                .bk-meta{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap;}
-                .bk-genre{font-size:11px;font-weight:400;color:rgba(160,120,40,0.6);padding:2px 8px;border:1px solid rgba(160,120,40,0.18);border-radius:2px;}
-                .bk-cond{font-size:11px;font-weight:300;color:rgba(26,22,16,0.3);}
-                .bk-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:12px;border-top:1px solid rgba(160,120,40,0.07);}
-                .bk-price{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#a07828;}
-                .bk-price.ex{font-size:12px;font-weight:400;color:rgba(160,120,40,0.5);font-family:'Inter',sans-serif;}
-                .bk-loc{font-size:11px;font-weight:300;color:rgba(26,22,16,0.25);}
-                .bk-arrow{position:absolute;top:12px;right:12px;font-size:14px;color:rgba(160,120,40,0.5);opacity:0;transform:translate(-3px,3px);transition:opacity 0.2s,transform 0.2s;}
+/* IMAGE */
+.bk-img{
+    width:100%;
+    aspect-ratio:3/4;
+    overflow:hidden;
+    background:#111;
+    position:relative;
+}
+.bk-img img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform 0.5s ease;
+}
+.bk-card:hover .bk-img img{
+    transform:scale(1.1);
+}
 
-                @media(max-width:640px){.bk{padding:32px 16px 60px;}.bk-header{flex-direction:column;align-items:flex-start;}.bk-search{max-width:100%;}.bk-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));}.bk-clear{margin-left:0;}}
-            `}</style>
+/* BADGE */
+.bk-badge{
+    position:absolute;
+    bottom:12px;
+    left:12px;
+    padding:4px 12px;
+    font-size:10px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:#000;
+    border-radius:4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* BODY */
+.bk-body{
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+/* TITLE */
+.bk-book-title{
+    font-family:'Fraunces',serif;
+    font-size:18px;
+    font-weight:600;
+    color:#fff;
+    line-height:1.3;
+}
+
+/* AUTHOR */
+.bk-author{
+    font-size:13px;
+    color:rgba(255,255,255,0.4);
+}
+
+/* META */
+.bk-meta{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:4px;
+}
+.bk-genre{
+    font-size:11px;
+    padding:2px 10px;
+    border-radius:100px;
+    border:1px solid rgba(255, 193, 7, 0.3);
+    color:#FFC107;
+}
+.bk-cond{
+    font-size:11px;
+    color:rgba(255,255,255,0.3);
+}
+
+/* FOOTER */
+.bk-footer{
+    margin-top:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-top:15px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.bk-price{
+    font-size:18px;
+    font-weight:700;
+    color:#FFC107;
+}
+.bk-price.ex {
+    font-size:14px;
+    color: #fff;
+    font-style: italic;
+}
+
+.bk-loc{
+    font-size:11px;
+    color:rgba(255,255,255,0.4);
+}
+
+/* ARROW */
+.bk-arrow{
+    position:absolute;
+    top:15px;
+    right:15px;
+    color: #FFC107;
+    font-size: 20px;
+    opacity:0;
+    transition:all 0.2s;
+    z-index: 2;
+}
+.bk-card:hover .bk-arrow{
+    opacity:1;
+    transform:translate(2px, -2px);
+}
+
+/* CLEAR BUTTON */
+.bk-clear{
+    padding:12px 24px;
+    border-radius:8px;
+    border:1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color:#fff;
+    font-size:13px;
+    font-weight: 500;
+    cursor:pointer;
+    transition:all 0.2s;
+    margin-left:auto;
+}
+
+.bk-clear:hover{
+    background: rgba(255, 255, 255, 0.05);
+    border-color: #FFC107;
+    color: #FFC107;
+}
+
+.bk-count {
+    max-width: 1200px;
+    margin: 0 auto 20px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.3);
+}
+.bk-count b { color: #FFC107; }
+
+/* LOADING */
+.bk-loading {
+    display: flex;
+    justify-content: center;
+    padding: 100px;
+    color: #FFC107;
+}
+
+@media(max-width:640px){
+    .bk{padding:40px 16px;}
+    .bk-header { flex-direction: column; align-items: flex-start; }
+    .bk-search { max-width: 100%; }
+}
+`}</style>
 
             <div className="bk">
                 <div className="bk-header">
-                    <h1 className="bk-title">Browse <span>Books</span></h1>
+                    <h1 className="bk-title">Library <span>Archive</span></h1>
                     <form className="bk-search" onSubmit={handleSearch}>
-                        <input type="text" placeholder="Search title or author…" value={keyword} onChange={e => setKeyword(e.target.value)} />
-                        <button type="submit">Search</button>
+                        <input type="text" placeholder="Search by title, author..." value={keyword} onChange={e => setKeyword(e.target.value)} />
+                        <button type="submit">Find</button>
                     </form>
                 </div>
 
                 <div className="bk-filters">
                     <select className="bk-sel" name="type" value={filters.type} onChange={handleFilter}>
-                        <option value="">All Types</option>
-                        <option value="SELL">Sell</option>
+                        <option value="">Availability</option>
+                        <option value="SELL">Buy</option>
                         <option value="RENT">Rent</option>
                         <option value="EXCHANGE">Exchange</option>
                     </select>
@@ -132,35 +349,31 @@ const Books = () => {
                         <option value="Non-Fiction">Non-Fiction</option>
                         <option value="Fantasy">Fantasy</option>
                         <option value="Science">Science</option>
-                        <option value="History">History</option>
-                        <option value="Biography">Biography</option>
                         <option value="Technology">Technology</option>
-                        <option value="Other">Other</option>
                     </select>
                     <select className="bk-sel" name="condition" value={filters.condition} onChange={handleFilter}>
-                        <option value="">All Conditions</option>
+                        <option value="">Condition</option>
                         <option value="New">New</option>
-                        <option value="Like New">Like New</option>
                         <option value="Good">Good</option>
                         <option value="Fair">Fair</option>
                     </select>
-                    <input className="bk-inp" type="number" name="minPrice" placeholder="Min ₹" value={filters.minPrice} onChange={handleFilter} />
-                    <input className="bk-inp" type="number" name="maxPrice" placeholder="Max ₹" value={filters.maxPrice} onChange={handleFilter} />
+                    <input className="bk-inp" style={{width: '100px'}} type="number" name="minPrice" placeholder="Min ₹" value={filters.minPrice} onChange={handleFilter} />
+                    <input className="bk-inp" style={{width: '100px'}} type="number" name="maxPrice" placeholder="Max ₹" value={filters.maxPrice} onChange={handleFilter} />
                     <select className="bk-sel" name="sort" value={filters.sort} onChange={handleFilter}>
                         <option value="">Sort By</option>
-                        <option value="newest">Newest First</option>
-                        <option value="low">Price: Low → High</option>
-                        <option value="high">Price: High → Low</option>
+                        <option value="newest">Recent</option>
+                        <option value="low">Price: Low</option>
+                        <option value="high">Price: High</option>
                     </select>
-                    <button className="bk-clear" onClick={clearFilters}>Clear</button>
+                    <button className="bk-clear" onClick={clearFilters}>Reset</button>
                 </div>
 
-                <div className="bk-count">Showing <b>{available.length}</b> books</div>
+                <div className="bk-count">Displaying <b>{available.length}</b> Curated Titles</div>
 
                 {loading ? (
-                    <div className="bk-loading"><span className="bk-dot"/><span className="bk-dot"/><span className="bk-dot"/></div>
+                    <div className="bk-loading">Loading Archive...</div>
                 ) : available.length === 0 ? (
-                    <div className="bk-empty">No books found.</div>
+                    <div className="bk-empty" style={{textAlign: 'center', padding: '100px', color: 'rgba(255,255,255,0.2)'}}>No matches found in the collection.</div>
                 ) : (
                     <div className="bk-grid">
                         {available.map(book => (
@@ -169,9 +382,9 @@ const Books = () => {
                                 <div className="bk-img">
                                     {book.imageUrl
                                         ? <img src={book.imageUrl} alt={book.title} />
-                                        : <div className="bk-noimg">📚</div>
+                                        : <div style={{height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '40px', background: '#111'}}>📖</div>
                                     }
-                                    <span className="bk-badge" style={{ background: typeColor[book.type] || '#a07828' }}>{book.type}</span>
+                                    <span className="bk-badge" style={{ background: typeColor[book.type] || '#FFC107' }}>{book.type}</span>
                                 </div>
                                 <div className="bk-body">
                                     <div className="bk-book-title">{book.title}</div>
@@ -182,7 +395,7 @@ const Books = () => {
                                     </div>
                                     <div className="bk-footer">
                                         {book.type === 'EXCHANGE'
-                                            ? <span className="bk-price ex">Free Exchange</span>
+                                            ? <span className="bk-price ex">Exchange Only</span>
                                             : <span className="bk-price">₹{book.price}</span>
                                         }
                                         <span className="bk-loc">📍 {book.location}</span>

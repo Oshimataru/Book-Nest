@@ -1,7 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { getAllClubs, createClub, joinClub } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+
+const BookIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffc107" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+    </svg>
+);
 
 const BookClubs = () => {
     const navigate = useNavigate();
@@ -42,129 +50,165 @@ const BookClubs = () => {
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Fraunces:ital,wght@0,600;1,400&display=swap');
                 .cl*{box-sizing:border-box;margin:0;padding:0;}
-                .cl{min-height:100vh;background:#f7f3ee;font-family:'Inter',sans-serif;color:#1a1610;padding:48px 32px 80px;}
+                .cl{min-height:100vh;background:#000000;font-family:'Inter',sans-serif;color:#ffffff;padding:48px 32px 80px;}
 
-                .cl-header{max-width:1100px;margin:0 auto 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
-                .cl-title{font-family:'Fraunces',serif;font-size:clamp(26px,4vw,40px);font-weight:600;color:#1a1610;letter-spacing:-0.5px;line-height:1;}
-                .cl-title span{color:#a07828;font-style:italic;font-weight:400;}
-                .cl-create-btn{padding:10px 22px;background:#a07828;color:#fff;border:none;border-radius:4px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:background 0.15s,transform 0.15s;}
-                .cl-create-btn:hover{background:#b5892e;transform:translateY(-1px);}
+                .cl-header{max-width:1100px;margin:0 auto 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+                .cl-title{font-family:'Fraunces',serif;font-size:clamp(32px,5vw,42px);font-weight:600;color:#ffffff;letter-spacing:-0.5px;line-height:1;}
+                .cl-title span{color:#ffc107;font-style:italic;font-weight:400;}
+                
+                .cl-create-btn{padding:12px 24px;background:#ffc107;color:#000;border:none;border-radius:4px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:1px;}
+                .cl-create-btn:hover{background:#ffdb70;transform:translateY(-2px);box-shadow:0 4px 15px rgba(255,193,7,0.3);}
 
-                .cl-err{max-width:1100px;margin:0 auto 20px;padding:12px 16px;border:1px solid rgba(180,60,50,0.2);border-radius:4px;background:rgba(200,60,50,0.05);color:rgba(180,60,50,0.8);font-size:13px;font-weight:300;}
+                .cl-err{max-width:1100px;margin:0 auto 20px;padding:14px;border:1px solid rgba(255,82,82,0.3);border-radius:8px;background:rgba(255,82,82,0.05);color:#ff5252;font-size:13px;}
 
-                /* Create form panel */
-                .cl-form-wrap{max-width:1100px;margin:0 auto 28px;border:1px solid rgba(160,120,40,0.18);border-radius:4px;background:#faf7f2;overflow:hidden;}
-                .cl-form-header{padding:16px 24px;border-bottom:1px solid rgba(160,120,40,0.1);display:flex;align-items:center;justify-content:space-between;}
-                .cl-form-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:#1a1610;letter-spacing:-0.3px;}
-                .cl-form-close{background:none;border:none;font-size:18px;color:rgba(26,22,16,0.3);cursor:pointer;line-height:1;padding:2px 6px;transition:color 0.15s;}
-                .cl-form-close:hover{color:rgba(26,22,16,0.7);}
-                .cl-form{padding:20px 24px;display:flex;flex-direction:column;gap:12px;}
-                .cl-input,.cl-textarea{padding:10px 13px;background:#f7f3ee;border:1px solid rgba(160,120,40,0.16);border-radius:4px;color:#1a1610;font-family:'Inter',sans-serif;font-size:13.5px;font-weight:300;outline:none;transition:border-color 0.15s,background 0.15s;width:100%;}
-                .cl-input::placeholder,.cl-textarea::placeholder{color:rgba(26,22,16,0.22);}
-                .cl-input:focus,.cl-textarea:focus{border-color:rgba(160,120,40,0.4);background:#f7f3ee;}
-                .cl-textarea{resize:vertical;min-height:80px;line-height:1.6;}
-                .cl-form-actions{display:flex;gap:10px;justify-content:flex-end;}
-                .cl-cancel{padding:9px 18px;background:transparent;border:1px solid rgba(160,120,40,0.2);border-radius:4px;color:rgba(26,22,16,0.5);font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;transition:border-color 0.15s,color 0.15s;}
-                .cl-cancel:hover{border-color:rgba(160,120,40,0.4);color:rgba(26,22,16,0.8);}
-                .cl-submit{padding:9px 20px;background:#a07828;border:none;border-radius:4px;color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:background 0.15s;}
-                .cl-submit:hover{background:#b5892e;}
+                .cl-form-wrap{max-width:1100px;margin:0 auto 32px;border:1px solid rgba(255,193,7,0.2);border-radius:12px;background:#0a0a0a;overflow:hidden;}
+                .cl-form-header{padding:20px 24px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;}
+                .cl-form-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:#ffc107;}
+                .cl-form-close{background:none;border:none;font-size:24px;color:rgba(255,255,255,0.3);cursor:pointer;transition:color 0.15s;}
+                .cl-form-close:hover{color:#ffffff;}
+                
+                .cl-form{padding:24px;display:flex;flex-direction:column;gap:16px;}
+                .cl-input,.cl-textarea{padding:12px 16px;background:#111;border:1px solid rgba(255,193,7,0.1);border-radius:6px;color:#fff;font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;}
+                .cl-input:focus,.cl-textarea:focus{border-color:#ffc107;}
+                .cl-textarea{resize:vertical;min-height:100px;}
+                
+                .cl-form-actions{display:flex;gap:12px;justify-content:flex-end;}
+                .cl-cancel{padding:10px 20px;background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:4px;color:rgba(255,255,255,0.5);cursor:pointer;font-size:13px;}
+                .cl-submit{padding:10px 22px;background:#ffc107;border:none;border-radius:4px;color:#000;font-weight:600;cursor:pointer;font-size:13px;}
 
-                .cl-loading,.cl-empty{max-width:1100px;margin:80px auto;text-align:center;font-size:14px;font-weight:300;color:rgba(26,22,16,0.3);}
-                .cl-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#a07828;margin:0 3px;animation:clB 1.2s ease-in-out infinite;}
-                .cl-dot:nth-child(2){animation-delay:0.15s;}.cl-dot:nth-child(3){animation-delay:0.3s;}
+                .cl-loading{text-align:center;padding:100px 0;}
+                .cl-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#ffc107;margin:0 4px;animation:clB 1.2s ease-in-out infinite;}
                 @keyframes clB{0%,80%,100%{transform:scale(0.6);opacity:0.3;}40%{transform:scale(1);opacity:1;}}
 
-                /* Grid */
-                .cl-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;border:1px solid rgba(160,120,40,0.1);}
+                .cl-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;}
 
-                .cl-card{background:#f7f3ee;padding:22px;display:flex;flex-direction:column;gap:8px;border-right:1px solid rgba(160,120,40,0.08);border-bottom:1px solid rgba(160,120,40,0.08);transition:background 0.18s;}
-                .cl-card:hover{background:#faf7f2;}
+                .cl-card{background:#0a0a0a;padding:28px;border:1px solid rgba(255,255,255,0.05);border-radius:12px;display:flex;flex-direction:column;gap:12px;transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);position:relative;overflow:hidden;}
+                .cl-card:hover{border-color:rgba(255,193,7,0.3);transform:translateY(-4px);background:#111;}
 
-                .cl-card-icon{font-size:22px;margin-bottom:2px;}
-                .cl-card-name{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:#1a1610;line-height:1.2;letter-spacing:-0.3px;}
-                .cl-card-desc{font-size:13px;font-weight:300;color:rgba(26,22,16,0.45);line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-                .cl-card-book{font-size:12px;font-weight:400;color:rgba(160,120,40,0.7);padding:5px 10px;background:rgba(160,120,40,0.07);border:1px solid rgba(160,120,40,0.15);border-radius:2px;width:fit-content;display:flex;align-items:center;gap:5px;}
+                .cl-card-name{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:#ffffff;letter-spacing:-0.4px;}
+                .cl-card-desc{font-size:14px;font-weight:300;color:rgba(255,255,255,0.5);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+                
+                .cl-card-book{font-size:12px;font-weight:500;color:#ffc107;padding:6px 12px;background:rgba(255,193,7,0.08);border:1px solid rgba(255,193,7,0.2);border-radius:4px;width:fit-content;display:flex;align-items:center;gap:6px;}
 
-                .cl-card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:14px;border-top:1px solid rgba(160,120,40,0.07);}
-                .cl-members{font-size:12px;font-weight:300;color:rgba(26,22,16,0.35);}
-                .cl-btns{display:flex;gap:8px;align-items:center;}
-                .cl-view{padding:7px 14px;background:transparent;border:1px solid rgba(160,120,40,0.22);border-radius:4px;color:#a07828;font-family:'Inter',sans-serif;font-size:12.5px;cursor:pointer;transition:background 0.15s,border-color 0.15s;}
-                .cl-view:hover{background:rgba(160,120,40,0.07);border-color:rgba(160,120,40,0.4);}
-                .cl-join{padding:7px 14px;background:#a07828;border:none;border-radius:4px;color:#fff;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;cursor:pointer;transition:background 0.15s;}
-                .cl-join:hover{background:#b5892e;}
-                .cl-joined{font-size:12px;font-weight:400;color:#4a8c4a;padding:4px 10px;background:rgba(80,140,80,0.08);border:1px solid rgba(80,140,80,0.2);border-radius:2px;}
+                .cl-card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:20px;border-top:1px solid rgba(255,255,255,0.05);}
+                .cl-members{font-size:12px;font-weight:400;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;}
+                
+                .cl-view{padding:8px 16px;background:transparent;border:1px solid rgba(255,193,7,0.3);border-radius:4px;color:#ffc107;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;}
+                .cl-view:hover{background:rgba(255,193,7,0.1);border-color:#ffc107;}
+                
+                .cl-join{padding:8px 18px;background:#ffc107;border:none;border-radius:4px;color:#000;font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;}
+                .cl-join:hover{background:#ffdb70;}
+                
+                .cl-joined{font-size:11px;font-weight:600;color:#03dac5;padding:5px 12px;background:rgba(3,218,197,0.1);border:1px solid rgba(3,218,197,0.3);border-radius:4px;text-transform:uppercase;}
 
-                @media(max-width:640px){.cl{padding:32px 16px 60px;}.cl-grid{grid-template-columns:1fr;}.cl-form{padding:16px;}}
+                @media(max-width:640px){.cl{padding:40px 20px;}.cl-grid{grid-template-columns:1fr;}}
             `}</style>
 
             <div className="cl">
-                <div className="cl-header">
+                <motion.div 
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="cl-header"
+                >
                     <h1 className="cl-title">Book <span>Clubs</span></h1>
                     {user && (
                         <button className="cl-create-btn" onClick={() => setShowCreate(o => !o)}>
                             + Create Club
                         </button>
                     )}
-                </div>
+                </motion.div>
 
-                {error && <div className="cl-err">{error}</div>}
+                <AnimatePresence>
+                    {error && (
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            className="cl-err"
+                        >
+                            {error}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
-                {/* Create form */}
-                {showCreate && (
-                    <div className="cl-form-wrap">
-                        <div className="cl-form-header">
-                            <span className="cl-form-title">Create a new club</span>
-                            <button className="cl-form-close" onClick={() => setShowCreate(false)}>×</button>
-                        </div>
-                        <form className="cl-form" onSubmit={handleCreate}>
-                            <input className="cl-input" type="text" placeholder="Club name"
-                                value={formData.name}
-                                onChange={e => setFormData({ ...formData, name: e.target.value })}
-                                required />
-                            <textarea className="cl-textarea" placeholder="Description…"
-                                value={formData.description}
-                                onChange={e => setFormData({ ...formData, description: e.target.value })}
-                                rows="3" required />
-                            <input className="cl-input" type="text" placeholder="Currently reading (optional)"
-                                value={formData.currentBook}
-                                onChange={e => setFormData({ ...formData, currentBook: e.target.value })} />
-                            <div className="cl-form-actions">
-                                <button type="button" className="cl-cancel" onClick={() => setShowCreate(false)}>Cancel</button>
-                                <button type="submit" className="cl-submit">Create Club</button>
+                <AnimatePresence>
+                    {showCreate && (
+                        <motion.div 
+                            initial={{ opacity: 0, y: -30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -30 }}
+                            className="cl-form-wrap"
+                        >
+                            <div className="cl-form-header">
+                                <span className="cl-form-title">Launch New Club</span>
+                                <button className="cl-form-close" onClick={() => setShowCreate(false)}>×</button>
                             </div>
-                        </form>
-                    </div>
-                )}
+                            <form className="cl-form" onSubmit={handleCreate}>
+                                <input className="cl-input" type="text" placeholder="Club Name"
+                                    value={formData.name}
+                                    onChange={e => setFormData({ ...formData, name: e.target.value })}
+                                    required />
+                                <textarea className="cl-textarea" placeholder="What is this club about?"
+                                    value={formData.description}
+                                    onChange={e => setFormData({ ...formData, description: e.target.value })}
+                                    required />
+                                <input className="cl-input" type="text" placeholder="Current Reading (e.g. The Great Gatsby)"
+                                    value={formData.currentBook}
+                                    onChange={e => setFormData({ ...formData, currentBook: e.target.value })} />
+                                <div className="cl-form-actions">
+                                    <button type="button" className="cl-cancel" onClick={() => setShowCreate(false)}>Cancel</button>
+                                    <button type="submit" className="cl-submit">Establish Club</button>
+                                </div>
+                            </form>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
                 {loading ? (
-                    <div className="cl-loading"><span className="cl-dot"/><span className="cl-dot"/><span className="cl-dot"/></div>
-                ) : clubs.length === 0 ? (
-                    <div className="cl-empty">No book clubs yet. Create the first one!</div>
+                    <div className="cl-loading">
+                        <span className="cl-dot"/><span className="cl-dot"/><span className="cl-dot"/>
+                    </div>
                 ) : (
-                    <div className="cl-grid">
+                    <motion.div 
+                        initial="hidden"
+                        animate="visible"
+                        variants={{
+                            visible: { transition: { staggerChildren: 0.08 } }
+                        }}
+                        className="cl-grid"
+                    >
                         {clubs.map(club => (
-                            <div key={club.id} className="cl-card">
-                                <div className="cl-card-icon">📖</div>
+                            <motion.div 
+                                key={club.id} 
+                                variants={{
+                                    hidden: { opacity: 0, y: 20 },
+                                    visible: { opacity: 1, y: 0 }
+                                }}
+                                className="cl-card"
+                            >
+                                <div style={{ marginBottom: '12px' }}>
+                                    <BookIcon />
+                                </div>
                                 <div className="cl-card-name">{club.name}</div>
                                 <div className="cl-card-desc">{club.description}</div>
                                 {club.currentBook && (
                                     <div className="cl-card-book">
-                                        <span>📚</span> {club.currentBook}
+                                        <span>📖</span> {club.currentBook}
                                     </div>
                                 )}
                                 <div className="cl-card-footer">
-                                    <span className="cl-members">👥 {club.members?.length || 0} members</span>
-                                    <div className="cl-btns">
+                                    <span className="cl-members">{club.members?.length || 0} Members</span>
+                                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                                         <button className="cl-view" onClick={() => navigate(`/clubs/${club.id}`)}>View</button>
                                         {isMember(club)
-                                            ? <span className="cl-joined">✓ Joined</span>
+                                            ? <span className="cl-joined">Joined</span>
                                             : <button className="cl-join" onClick={() => handleJoin(club.id)}>Join</button>
                                         }
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 )}
             </div>
         </>
