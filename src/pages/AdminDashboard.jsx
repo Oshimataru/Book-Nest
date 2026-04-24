@@ -86,21 +86,36 @@ const AdminDashboard = () => {
   // ── API calls ─────────────────────────────────────────────────────────────
   const fetchAll = async () => {
     try {
-      const [aR, uR, bR, oR, mR] = await Promise.all([
+      // ✅ fetch independently — one failure won't kill everything
+      const results = await Promise.allSettled([
         getAdminAnalytics(),
         getAdminUsers(),
         getAdminBooks(),
         getAdminOrders(),
-        // ✅ FIX 4: Use getToken() not stale const
-        axios.get(`${API}/contact/all`, { headers: { Authorization: `Bearer ${getToken()}` } })
+        axios.get(`${API}/contact/all`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        })
       ]);
-      setAnalytics(aR.data);
-      setUsers(uR.data);
-      setBooks(bR.data);
-      setOrders(oR.data);
-      setMessages(mR.data);
+
+      const [aR, uR, bR, oR, mR] = results;
+
+      if (aR.status === 'fulfilled') setAnalytics(aR.value.data);
+      else console.error('Analytics failed:', aR.reason);
+
+      if (uR.status === 'fulfilled') setUsers(uR.value.data);
+      else console.error('Users failed:', uR.reason);
+
+      if (bR.status === 'fulfilled') setBooks(bR.value.data);
+      else console.error('Books failed:', bR.reason);
+
+      if (oR.status === 'fulfilled') setOrders(oR.value.data);
+      else console.error('Orders failed:', oR.reason);
+
+      if (mR.status === 'fulfilled') setMessages(mR.value.data);
+      else console.error('Messages failed:', mR.reason);
+
     } catch (err) {
-      console.error('Admin fetchAll failed:', err);
+      console.error('fetchAll error:', err);
       setError('Failed to load admin data.');
     } finally {
       setLoading(false);
@@ -450,47 +465,44 @@ const AdminDashboard = () => {
           ) : (
             <>
               {/* ── Analytics ── */}
-              {tab === 'analytics' && analytics && (
+              {tab === 'analytics' && (
                 <>
-                  <div className="ad-stats">
-                    {[
-                      ['Total Users', analytics.totalUsers],
-                      ['Total Books', analytics.totalBooks],
-                      ['Total Orders', analytics.totalOrders],
-                      ['Revenue', `₹${analytics.totalRevenue?.toFixed(0) ?? 0}`],
-                    ].map(([label, val]) => (
-                      <div key={label} className="ad-stat">
-                        <div className="ad-stat-num">{val}</div>
-                        <div className="ad-stat-label">{label}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="ad-charts">
-                    <div className="ad-chart">
-                      <div className="ad-chart-title">Book Status</div>
-                      <div className="ad-chart-wrap">
-                        <Doughnut
-                          data={bookStatusData}
-                          options={{ plugins: { legend: { labels: { color: chartTextColor, font: { family: 'Inter', size: 12 } } } } }}
-                        />
-                      </div>
+                  {!analytics ? (
+                    <div style={{ color: 'rgba(255,255,255,0.4)', padding: '40px', textAlign: 'center' }}>
+                      ⚠️ Analytics data unavailable. Check your backend /admin/analytics endpoint.
                     </div>
-                    <div className="ad-chart">
-                      <div className="ad-chart-title">Order Status</div>
-                      <Bar
-                        data={orderStatusData}
-                        options={{
-                          plugins: { legend: { display: false } },
-                          scales: {
-                            x: { ticks: { color: chartTextColor }, grid: { color: chartGridColor } },
-                            y: { ticks: { color: chartTextColor }, grid: { color: chartGridColor } },
-                          },
-                        }}
-                      />
-                    </div>
-                  </div>
+                  ) : (
+                    <>
+                      <div className="ad-stats">
+                        {[
+                          ['Total Users', analytics.totalUsers],
+                          ['Total Books', analytics.totalBooks],
+                          ['Total Orders', analytics.totalOrders],
+                          ['Revenue', `₹${analytics.totalRevenue?.toFixed(0) ?? 0}`],
+                        ].map(([label, val]) => (
+                          <div key={label} className="ad-stat">
+                            <div className="ad-stat-num">{val}</div>
+                            <div className="ad-stat-label">{label}</div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="ad-charts">
+                        <div className="ad-chart">
+                          <div className="ad-chart-title">Book Status</div>
+                          <div className="ad-chart-wrap">
+                            <Doughnut data={bookStatusData} options={{ plugins: { legend: { labels: { color: chartTextColor, font: { family: 'Inter', size: 12 } } } } }} />
+                          </div>
+                        </div>
+                        <div className="ad-chart">
+                          <div className="ad-chart-title">Order Status</div>
+                          <Bar data={orderStatusData} options={{ plugins: { legend: { display: false } }, scales: { x: { ticks: { color: chartTextColor }, grid: { color: chartGridColor } }, y: { ticks: { color: chartTextColor }, grid: { color: chartGridColor } } } }} />
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </>
               )}
+
 
               {/* ── Users ── */}
               {tab === 'users' && (
