@@ -89,9 +89,14 @@
 // ---------------------------------------------------------LOCAL------------------------------------------------------------------------
 import axios from 'axios';
 
-// ✅ Base URL fixed for local Spring Boot
+// ✅ Base URL fixed for local Spring Boot and Production
+let backendUrl = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || 'http://localhost:8082/api';
+if (!backendUrl.endsWith('/api')) {
+    backendUrl += '/api';
+}
+
 const API = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8082/api'
+    baseURL: backendUrl
 });
 
 // ✅ Attach JWT token automatically
