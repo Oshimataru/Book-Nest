@@ -28,7 +28,9 @@ import EditBook           from './pages/EditBook';
 import './styles/Auth.css';
 import './styles/Global.css';
 
-const API = import.meta.env.VITE_API_BASE_URL ? `${import.meta.env.VITE_API_BASE_URL}/home` : 'http://localhost:8082/api/home';
+let backendUrl = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || 'http://localhost:8082/api';
+if (!backendUrl.endsWith('/api')) backendUrl += '/api';
+const API = `${backendUrl}/home`;
 
 const ProtectedRoute = ({ children }) => {
     const { user } = useAuth();
