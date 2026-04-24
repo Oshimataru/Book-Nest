@@ -478,11 +478,17 @@ const chartGridColor = 'rgba(255,193,7,0.1)';
                         </div>
                     </div>
 
-                    {error && <div className="ad-err">{error}</div>}
-
-                    {loading ? (
-                        <div className="ad-loading">
-                            <span className="ad-dot"/><span className="ad-dot"/><span className="ad-dot"/>
+                    {error ? (
+                        <div className="ad-err" style={{ fontSize: '20px', textAlign: 'center', padding: '40px' }}>
+                            ❌ {error}
+                            <br/><br/>
+                            <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.5)' }}>
+                                Please check your browser's Developer Tools (F12) -> Network tab to see which request is failing.
+                            </span>
+                        </div>
+                    ) : loading ? (
+                        <div className="ad-loading" style={{ textAlign: 'center', padding: '100px 0', color: '#ffc107', fontSize: '24px' }}>
+                            Loading Dashboard Data...
                         </div>
                     ) : <>
 
