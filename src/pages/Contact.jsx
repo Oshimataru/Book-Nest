@@ -21,8 +21,9 @@ function Contact() {
     try {
       const token = localStorage.getItem("token");
 
+      const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8082/api';
       await axios.post(
-        "http://localhost:8082/api/contact",
+        `${baseURL}/contact`,
         {
           subject,
           priority,

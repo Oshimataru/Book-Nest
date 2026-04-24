@@ -14,7 +14,7 @@ import axios from 'axios';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title);
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:8082';
+const API = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8082/api';
 const statusStyle = {
     PENDING:          { bg:'rgba(160,120,40,0.1)',  color:'#a07828',              border:'rgba(160,120,40,0.25)'  },
     CONFIRMED:        { bg:'rgba(74,127,165,0.1)',  color:'#4a7fa5',              border:'rgba(74,127,165,0.25)'  },
@@ -105,7 +105,7 @@ const AdminDashboard = () => {
                 getAdminUsers(),
                 getAdminBooks(),
                 getAdminOrders(),
-                axios.get(`${API}/api/contact/all`, {
+                axios.get(`${API}/contact/all`, {
     headers: {
         Authorization: `Bearer ${token}`
     }
@@ -139,7 +139,7 @@ const AdminDashboard = () => {
     const token = localStorage.getItem("token");
 
     await axios.put(
-      `${API}/api/contact/${id}/reply`,
+      `${API}/contact/${id}/reply`,
       { reply: replyText[id] },
       {
         headers: {
@@ -167,7 +167,7 @@ const AdminDashboard = () => {
     const token = localStorage.getItem("token");
 
     await axios.put(
-      `${API}/api/contact/${id}/status`,
+      `${API}/contact/${id}/status`,
       { status },
       {
         headers: {
@@ -199,7 +199,7 @@ const AdminDashboard = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `${API}/api/admin/deliveries/${deliveryModal.id}`,
+                `${API}/admin/deliveries/${deliveryModal.id}`,
                 {
                     status:          deliveryForm.status,
                     currentLocation: deliveryForm.currentLocation,

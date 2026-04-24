@@ -28,7 +28,7 @@ import EditBook           from './pages/EditBook';
 import './styles/Auth.css';
 import './styles/Global.css';
 
-const API = 'http://localhost:8082/api/home';
+const API = import.meta.env.VITE_API_BASE_URL ? `${import.meta.env.VITE_API_BASE_URL}/home` : 'http://localhost:8082/api/home';
 
 const ProtectedRoute = ({ children }) => {
     const { user } = useAuth();

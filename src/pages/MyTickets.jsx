@@ -9,8 +9,9 @@ function MyTickets() {
       try {
         const token = localStorage.getItem("token");
 
+        const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8082/api';
         const res = await axios.get(
-          "http://localhost:8082/api/contact/my",
+          `${baseURL}/contact/my`,
           {
             headers: {
               Authorization: `Bearer ${token}`
